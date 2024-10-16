@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Поворот не туда</title>
+    <style>
+        table {
+            width: 40%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid rgb(197, 197, 197);
+            padding: 8px;
+        }
+        th {
+            background-color: #a0a0a0;
+        }
+    </style>
+</head>
+<body>
+    <style>
+        body {
+            background-color: rgb(58, 58, 58);
+        }
+    </style>
+    <table id="usrTb">
+        <thead>
+            <tr>
+                <th>Чье имя</th>
+                <th>э МАЙЛ</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Ошибка сети');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                const tableBody = document.querySelector('#usrTb tbody');
+                data.forEach((user) => {
+                    const rw = document.createElement('tr');
+                    
+                    const name = document.createElement('td');
+                    name.textContent = user.name;
+                    
+                    const email = document.createElement('td');
+                    email.textContent = user.email;
+                    
+                    rw.appendChild(name);
+                    rw.appendChild(email);
+                    tableBody.appendChild(rw);
+                });
+            })
+            .catch((error) => console.error('Ошибка:', error));
+    </script>
+</body>
+</html>
+

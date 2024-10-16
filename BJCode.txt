@@ -1,0 +1,132 @@
+using System;
+
+namespace MyFirstApp
+{
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        int playerScore = 0;
+        int dealerScore = 0;
+        Random random = new Random();
+
+ 
+        int dealerHiddenCard = GenerateRandomCardValue(ref dealerScore); 
+        int dealerVisibleCard = GenerateRandomCardValue(ref dealerScore); 
+        int playerFirstCard = GenerateRandomCardValue(ref playerScore); 
+        
+        Console.WriteLine($"Дилер получил одну скрытую карту и одну открытую карту: {dealerVisibleCard}");
+
+ 
+        while (true)
+        {
+            Console.WriteLine($"Ваш текущий счёт: {playerScore}. Счёт дилера (без учёта скрытой карты): {dealerScore - dealerHiddenCard}");
+            Console.WriteLine("Хотите взять карту (y) или остановиться (n)?");
+            string action = Console.ReadLine();
+
+            switch (action.ToLower())
+            {
+                case "y":
+   
+                    int playerCard = GenerateRandomCardValue(ref playerScore);
+                    Console.WriteLine($"Вы получили карту: {playerCard}, общий счёт: {playerScore}");
+
+                  
+                    if (playerScore > 21)
+                    {
+                        Console.WriteLine("Вы проиграли! Счёт превышает 21.");
+                        return; 
+                    } 
+                    else if (playerScore == 21) 
+                    {
+                        Console.WriteLine($"Очко! Игрок выиграл.");
+                        return;
+                    }
+
+                    if (dealerScore + dealerHiddenCard <= playerScore) {
+                        int dealerCard = GenerateRandomCardValue(ref dealerScore);
+                        Console.WriteLine($"Дилер берёт карту: {dealerCard}, общий счёт дилера (без учёта скрытой карты): {dealerScore - dealerHiddenCard}");
+                    } else {
+                        Console.WriteLine($"Дилер остановился, общий счёт дилера (без учёта скрытой карты): {dealerScore - dealerHiddenCard}");
+                    }
+                   
+
+                  
+                    if (dealerScore > 21)
+                    {
+                        Console.WriteLine($"Дилер проиграл! Счёт превышает 21. Скрытая карта: {dealerHiddenCard}, Счёт дилера: {dealerScore}");
+                        return; 
+                    } 
+                    else if (dealerScore == 21) 
+                    {
+                        Console.WriteLine($"Очко! Дилер выиграл.");
+                        return;
+                    }
+                    break;
+
+                case "n":
+                    
+                    Console.WriteLine("Вы остановились. Дилер теперь будет завершать игру.");
+                    dealerScore = DealerPlay(dealerScore, random, playerScore, dealerHiddenCard);
+                    int totalDealerScore = dealerScore + dealerHiddenCard; 
+                    Console.WriteLine($"Счёт дилера с учётом скрытой карты: {totalDealerScore}");
+
+                    
+                    if (totalDealerScore > 21)
+                    {
+                        Console.WriteLine("Дилер проиграл! Счёт превышает 21.");
+                    }
+                    else if (playerScore > totalDealerScore)
+                    {
+                        Console.WriteLine("Вы выиграли!");
+                    }
+                    else if (totalDealerScore > playerScore)
+                    {
+                        Console.WriteLine("Дилер выиграл!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ничья!");
+                    }
+                    Console.WriteLine($"Скрытая карта дилера: {dealerHiddenCard}");
+                    return;
+
+                default:
+                    Console.WriteLine("Неверный ввод.");
+                    break;
+            }
+        }
+    }
+
+    static int GenerateRandomCardValue(ref int score)
+    {
+        Random random = new Random();
+        int cardValue = random.Next(2, 12); 
+
+        if (cardValue == 11 && score + 11 > 21)
+        {
+            cardValue = 1; 
+        }
+
+        score += cardValue; 
+        return cardValue;
+    }
+
+    static int DealerPlay(int dealerScore, Random random, int playerScore, int dealerHiddenCard)
+    {
+        while (dealerScore < 17 || (dealerScore + dealerHiddenCard <= playerScore))
+        {
+            int dealerCard = GenerateRandomCardValue(ref dealerScore);
+            Console.WriteLine($"Дилер получил карту: {dealerCard}, общий счёт: {dealerScore + dealerHiddenCard}");
+            if (dealerHiddenCard == 11 && dealerScore >= 11) {
+                dealerHiddenCard = 1;
+            }
+        }
+        return dealerScore;
+    }
+}
+
+
+
+}
