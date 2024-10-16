@@ -1,15 +1,39 @@
-element.style {
+/* Основные стили для шапки */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa; /* Можете поменять на нужный цвет */
 }
-user agent stylesheet
-script {
-    display: none;
+
+.logo img {
+    height: 40px; /* Настройте размер логотипа */
 }
-:host, :root {
-    --fa-font-solid: normal 900 1em / 1 "Font Awesome 6 Free";
+
+.header-text {
+    margin: 0 15px;
+    font-size: 16px;
+    cursor: pointer;
 }
-:host, :root {
-    --fa-font-regular: normal 400 1em / 1 "Font Awesome 6 Free";
+
+/* Кнопки */
+.buttons-header .button-header {
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
 }
-:host, :root {
-    --fa-font-brands: normal 400 1em / 1 "Font Awesome 6 Brands";
+
+.purple-btn {
+    background-color: #611f69; /* Пример цвета кнопки */
+    color: #fff;
 }
+
+.white-btn {
+    background-color: #fff;
+    color: #611f69;
+    border: 1px solid #611f69;
+}
+
+/* Дополнительно настроить стили по аналогии */
+
