@@ -1,9 +1,8 @@
 element.style {
 }
 user agent stylesheet
-div {
-    display: block;
-    unicode-bidi: isolate;
+script {
+    display: none;
 }
 :host, :root {
     --fa-font-solid: normal 900 1em / 1 "Font Awesome 6 Free";
